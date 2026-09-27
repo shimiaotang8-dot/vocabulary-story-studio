@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#f7f5f0" />
+  <meta name="description" content="把正在学习的词汇放进一段真正连贯的故事里。" />
+  <title>词间 · Vocabulary Story Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="rail">
+      <a class="brand" href="#" aria-label="词间首页">
+        <span class="brand-mark">间</span>
+        <span class="brand-label">词间</span>
+      </a>
+      <nav class="rail-nav" aria-label="主导航">
+        <a class="nav-item active" href="#studio" title="故事工作台"><span>✳</span><small>工作台</small></a>
+        <button class="nav-item" id="open-vocab" title="词汇库"><span>▤</span><small>词汇库</small></button>
+        <button class="nav-item" id="open-shelf" title="故事书架"><span>▧</span><small>书架</small></button>
+        <button class="nav-item" id="open-settings" title="偏好设置"><span>⚙</span><small>设置</small></button>
+      </nav>
+      <div class="rail-bottom"><span class="status-dot"></span><span>本地保存</span></div>
+    </aside>
+
+    <main class="main-content" id="studio">
+      <header class="topbar">
+        <div class="breadcrumb"><span>学习空间</span><span class="slash">/</span><strong>故事工作台</strong></div>
+        <div class="topbar-right"><span class="date-label" id="today-label"></span><span class="user-label hidden" id="user-label"></span><button class="login-button" id="open-auth">登录</button><button class="avatar" id="avatar-button" aria-label="个人空间">S</button></div>
+      </header>
+
+      <div class="content-wrap">
+        <section class="hero">
+          <div class="hero-copy">
+            <div class="eyebrow"><span class="eyebrow-line"></span>WORDS INTO WORLDS</div>
+            <h1>让每个单词，<br /><em>都有自己的故事。</em></h1>
+            <p class="hero-subtitle">把正在学习的词汇放进一段真正连贯的故事里。读情节，记住词。</p>
+          </div>
+          <div class="hero-note"><span class="note-star">✳</span><div><strong>今天也可以从一个词开始</strong><small>一段故事，就是一次新的记忆</small></div></div>
+        </section>
+
+        <section class="workspace-grid">
+          <div class="input-panel panel">
+            <div class="panel-heading"><div><span class="step-index">01</span><h2>收集词汇</h2></div><span class="quiet-label">WORDS TO LEARN</span></div>
+            <div class="input-tabs" role="tablist"><button class="input-tab active" data-tab="type" role="tab" aria-selected="true">逐个添加</button><button class="input-tab" data-tab="paste" role="tab" aria-selected="false">批量粘贴</button></div>
+            <div class="entry-area" id="entry-type"><form class="word-form" id="word-form"><label class="sr-only" for="word-input">输入一个单词</label><input id="word-input" autocomplete="off" placeholder="输入一个单词，比如：serendipity" /><button class="add-button" type="submit" aria-label="添加单词">＋</button></form><p class="input-hint">按 Enter 添加，支持英文单词和短语</p></div>
+            <div class="entry-area hidden" id="entry-paste"><textarea id="paste-input" rows="4" placeholder="一次粘贴多个词，每行一个：&#10;obtrude&#10;ephemeral&#10;serendipity"></textarea><button class="paste-button" id="import-words" type="button">导入这些词 <span>↗</span></button><p class="input-hint">自动按换行、逗号或分号拆分</p></div>
+            <div class="word-list-header"><span>本次词汇 <b id="word-count">0</b></span><div><button class="text-button" id="save-vocab" type="button">存入词库</button><button class="text-button" id="clear-words" type="button">清空</button></div></div>
+            <div class="word-list" id="word-list"><div class="empty-words"><span>✳</span><p>还没有单词</p><small>添加几个词，故事就开始了</small></div></div>
+            <div class="input-footer"><span class="privacy-icon">◉</span>词汇只保存在你的浏览器中</div>
+          </div>
+
+          <div class="story-column">
+            <section class="settings-panel panel">
+              <div class="panel-heading compact"><div><span class="step-index">02</span><h2>故事偏好</h2></div><button class="icon-button" id="settings-expand" aria-label="展开故事设置">⌄</button></div>
+              <div class="settings-body" id="settings-body">
+                <div class="mode-row"><div class="field-label"><span>语言模式</span><small>选择故事的主要语言</small></div><div class="segmented" role="group" aria-label="语言模式"><button class="mode-button selected" data-mode="zh" type="button"><span>中</span>中文故事</button><button class="mode-button" data-mode="en" type="button"><span>EN</span>English</button></div></div>
+                <div class="background-row"><div class="field-label"><span>故事背景</span><small>默认由单词自动决定</small></div><div class="background-control"><select id="background-select" aria-label="故事背景"><option value="">✦ 让单词决定背景</option></select><button class="icon-button add-background" id="add-background" type="button" title="添加背景">＋</button></div></div>
+                <div class="custom-prompt-row hidden" id="custom-prompt-row"><label for="custom-prompt">补充故事要求 <span>选填</span></label><textarea id="custom-prompt" rows="2" placeholder="例如：主角是一位正在寻找失踪妹妹的钟表匠……"></textarea></div>
+                <button class="quiet-expand" id="prompt-toggle" type="button">＋ 添加额外要求</button>
+              </div>
+            </section>
+
+            <section class="generate-panel panel">
+              <div class="generate-copy"><span class="step-index">03</span><div><h2>准备好开启故事了吗？</h2><p>每个词都会自然地进入情节，并附上释义。</p></div></div>
+              <button class="generate-button" id="generate-button" type="button"><span class="button-icon">✳</span><span>生成故事</span><span class="button-arrow">↗</span></button>
+              <div class="generate-meta"><span>✦&nbsp; 自动匹配故事氛围</span><span>每个单词都会出现</span></div>
+            </section>
+
+            <section class="result-panel panel" id="result-panel" aria-live="polite">
+              <div class="result-placeholder" id="result-placeholder"><div class="placeholder-orbit"><span>文</span><i>✳</i></div><p>你的故事会在这里展开</p><small>加入词汇，点击「生成故事」开始阅读</small></div>
+              <div class="story-result hidden" id="story-result"><div class="result-topline"><span class="result-tag"><i></i> YOUR STORY</span><div class="result-actions"><button class="text-button" id="save-story" type="button">＋ 保存到书架</button><button class="text-button" id="copy-story" type="button">▢ 复制</button><button class="text-button" id="regenerate-story" type="button">↻ 再写一篇</button></div></div><h2 id="story-title"></h2><div class="story-meta" id="story-meta"></div><article class="story-content" id="story-content"></article><div class="story-word-footer"><span>本故事包含</span><div id="used-word-list"></div></div></div>
+            </section>
+            <p class="footer-note">一词一故事 · 让记忆发生在阅读里</p>
+          </div>
+        </section>
+        <section class="page-view hidden" id="vocab-page">
+          <div class="page-heading"><div><span class="eyebrow"><span class="eyebrow-line"></span>MY WORDS</span><h1>我的<em>词汇库</em></h1><p>按加入日期整理词汇，勾选后可以批量生成故事或导出 CSV。</p></div><button class="outline-button" id="vocab-add-current">＋ 存入本次词汇</button></div>
+          <div class="library-panel panel"><div class="library-page-toolbar"><label class="select-all-label"><input type="checkbox" id="vocab-select-all"> 全选</label><span id="vocab-selected-count">已选 0 个</span><div class="toolbar-actions"><button class="outline-button" id="vocab-generate-selected">用选中词生成故事 ↗</button><button class="outline-button" id="vocab-export">导出 CSV</button><button class="danger-button" id="vocab-delete-selected">批量删除</button></div></div><div id="vocab-page-list" class="date-groups"></div></div>
+        </section>
+        <section class="page-view hidden" id="shelf-page">
+          <div class="page-heading"><div><span class="eyebrow"><span class="eyebrow-line"></span>YOUR STORIES</span><h1>故事<em>书架</em></h1><p>收藏的章节都在这里。打开故事，可以继续阅读或复制。</p></div><span class="shelf-total" id="shelf-total">0 篇收藏</span></div>
+          <div class="shelf-grid" id="shelf-page-list"></div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <dialog id="background-dialog" class="modal-dialog"><form method="dialog" id="background-form"><div class="modal-top"><span class="modal-kicker">STORY SETTINGS</span><button class="icon-button" value="cancel" aria-label="关闭">×</button></div><h2>添加一个背景</h2><p>保存你喜欢的故事设定，之后可以随时切换。</p><label class="modal-label" for="background-name">背景名称</label><input id="background-name" maxlength="24" placeholder="例：雨夜里的旧书店" required /><label class="modal-label" for="background-description">背景描述</label><textarea id="background-description" rows="4" maxlength="240" placeholder="写下场景、氛围或人物设定……" required></textarea><div class="modal-actions"><button class="cancel-button" value="cancel">取消</button><button class="save-button" id="save-background" value="default">保存背景 <span>↗</span></button></div></form></dialog>
+
+  <dialog id="settings-dialog" class="modal-dialog small-modal"><form method="dialog"><div class="modal-top"><span class="modal-kicker">PREFERENCES</span><button class="icon-button" value="cancel" aria-label="关闭">×</button></div><h2>偏好设置</h2><p>管理故事风格与本地数据。</p><div class="preference-note"><span>✦</span><div><strong>故事风格</strong><small>生成的故事会保持章节式叙事，优先照顾情节连贯和单词自然使用。</small></div></div><div class="preference-note"><span>◉</span><div><strong>数据存储</strong><small>词汇、自定义背景和上次故事保存在当前浏览器的本地存储中。</small></div></div><div class="modal-actions"><button class="save-button" value="default">知道了</button></div></form></dialog>
+  <dialog id="auth-dialog" class="modal-dialog small-modal account-dialog"><form id="auth-form"><div class="modal-top"><span class="modal-kicker">YOUR LEARNING SPACE</span><button class="icon-button" id="auth-close" type="button" aria-label="关闭">×</button></div><h2 id="auth-title">登录词间</h2><p id="auth-subtitle">登录后同步你的个人词库，并把喜欢的故事保存到书架。</p><div id="auth-login-fields"><div class="auth-tabs"><button type="button" class="auth-tab active" data-auth="login">登录</button><button type="button" class="auth-tab" data-auth="register">创建账户</button></div><label class="modal-label" for="auth-username">用户名</label><input id="auth-username" autocomplete="username" minlength="3" maxlength="24" required placeholder="3–24 位" /><label class="modal-label" for="auth-password">密码</label><input id="auth-password" type="password" autocomplete="current-password" minlength="8" maxlength="128" required placeholder="至少 8 位" /><label class="remember-label">保持登录 <select id="remember-days"><option value="7">7 天</option><option value="30">30 天</option></select></label><p class="auth-error" id="auth-error"></p><div class="modal-actions"><button class="save-button" id="auth-submit" type="submit">登录</button></div></div><section id="account-panel" class="hidden"><div class="account-stats"><article><strong id="stat-vocab-count">0</strong><span>词库现有单词</span></article><article><strong id="stat-words-added">0</strong><span>累计添加单词</span></article><article><strong id="stat-stories">0</strong><span>生成故事</span></article><article><strong id="stat-shelf">0</strong><span>书架收藏</span></article></div><div class="account-activity-heading"><strong>最近生成</strong><small>最近 6 篇</small></div><div id="account-recent" class="account-recent"></div><p class="account-footnote">统计仅记录本账户登录期间的操作；生成但未保存的故事也会计入。</p></section><button class="text-button logout-button hidden" id="logout-button" type="button">退出当前账户</button></form></dialog>
+  <dialog id="vocab-dialog" class="modal-dialog library-modal"><div class="modal-top"><span class="modal-kicker">MY VOCABULARY</span><button class="icon-button" data-close-dialog="vocab-dialog" aria-label="关闭">×</button></div><h2>我的词库</h2><p>保存常学词汇，之后勾选加入本次故事。</p><div class="library-toolbar"><button class="text-button" id="select-all-vocab">全选</button><button class="text-button" id="clear-vocab">清空词库</button></div><div id="vocab-library" class="library-list"></div><div class="modal-actions"><button class="cancel-button" data-close-dialog="vocab-dialog">关闭</button><button class="save-button" id="add-selected-vocab" type="button">加入本次词汇</button></div></dialog>
+  <dialog id="shelf-dialog" class="modal-dialog library-modal"><div class="modal-top"><span class="modal-kicker">SAVED STORIES</span><button class="icon-button" data-close-dialog="shelf-dialog" aria-label="关闭">×</button></div><h2>故事书架</h2><p>只保存你选择收藏的故事。</p><div id="story-shelf" class="library-list"></div><div class="modal-actions"><button class="save-button" data-close-dialog="shelf-dialog">完成</button></div></dialog>
+  <dialog id="save-choice-dialog" class="modal-dialog small-modal"><form method="dialog"><div class="modal-top"><span class="modal-kicker">A STORY TO KEEP?</span><button class="icon-button" value="cancel" aria-label="关闭">×</button></div><h2>把这篇故事放进书架吗？</h2><p>只有你选择保存的故事才会加入个人书架。</p><div class="modal-actions"><button class="cancel-button" id="skip-save" value="cancel">暂不保存</button><button class="save-button" id="confirm-save-story" value="default">保存到书架 <span>↗</span></button></div></form></dialog>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>

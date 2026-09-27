@@ -1,0 +1,7 @@
+.env
+.venv/
+rag-learning/
+wordstory.sqlite3
+*.sqlite3
+__pycache__/
+*.py[cod]
